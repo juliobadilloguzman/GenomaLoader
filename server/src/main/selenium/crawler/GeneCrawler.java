@@ -7,6 +7,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import selenium.bean.Allele;
 import selenium.bean.Gene;
+import selenium.bean.Reference;
 import selenium.util.AsyncStorage;
 import selenium.util.drivers.EnhancedWebDriver;
 
@@ -154,7 +155,7 @@ public class GeneCrawler {
         //IR A LA PAGINA
         myDriver.get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=gene&id="+id+"&report=sgml&retmode=xml");
         //GUARDAR XML
-        myDriver.printSourcePage("allele.txt");
+        myDriver.printSourcePage("allele_"+id+".txt");
 
         //ALMACENAMIENTO DURANTE LECTURA ASYNC
         HashMap<String,String> storage = AsyncStorage.getInstance().getStorage();
@@ -195,10 +196,7 @@ public class GeneCrawler {
                 }
             }
         };
-        saxParser.parse("allele.txt",handler);
-
-        //ESPERAR A QUE LECTOR ASYNC OBTENGA TODAS LAS PROPIEDADES
-        while (storage.size()<3)Thread.sleep(100);
+        saxParser.parse("allele_"+id+".txt",handler);
 
         //COPIAR CONTENIDO A OBJETO
         allele.setGeneAccession(storage.get("Gene-commentary_accession"));
@@ -210,4 +208,109 @@ public class GeneCrawler {
         storage.clear();
         return allele;
     }
+
+    public static ArrayList<String> getAlleleBibliography(EnhancedWebDriver myDriver, String id) throws InterruptedException, ParserConfigurationException, SAXException, IOException {
+
+        //ALMACENAMIENTO DURANTE LECTURA ASYNC
+        HashMap<String,String> storage = AsyncStorage.getInstance().getStorage();
+        storage.clear();
+
+        //LECTOR DE ARCHIVO XML ASYNC
+        SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+        DefaultHandler handler = new DefaultHandler(){
+            Boolean accession = false;
+
+            @Override
+            public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+                if (qName.equals("PubMedId")){
+                    accession = true;
+                }
+            }
+
+            @Override
+            public void endElement(String uri, String localName, String qName) throws SAXException { }
+
+            @Override
+            public void characters(char[] ch, int start, int length) throws SAXException {
+                if (accession){
+                    String temp = new String (ch, start, length).trim();
+                    AsyncStorage.getInstance().getStorage().put(temp,temp);
+                    accession = false;
+                }
+            }
+        };
+        saxParser.parse("allele_"+id+".txt",handler);
+
+        //COPIAR CONTENIDO
+        ArrayList<String> results = new ArrayList<>(storage.keySet());
+
+        //LIMPIAR
+        storage.clear();
+        return results;
+    }
+
+    public static Reference getReferenceData(EnhancedWebDriver myDriver, String id) throws InterruptedException, ParserConfigurationException, SAXException, IOException {
+        Reference reference = new Reference();
+
+        //IR A LA PAGINA
+        myDriver.get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id="+id);
+        //GUARDAR XML
+        myDriver.printSourcePage("ref_"+id+".txt");
+
+        //ALMACENAMIENTO DURANTE LECTURA ASYNC
+        HashMap<String,String> storage = AsyncStorage.getInstance().getStorage();
+        storage.clear();
+
+        //LECTOR DE ARCHIVO XML ASYNC
+        SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+        DefaultHandler handler = new DefaultHandler(){
+            Boolean accession = false;
+            String tag, lastName;
+
+            @Override
+            public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+                tag = qName;
+                if (qName.equals("Title") || qName.equals("ArticleTitle") || qName.equals("AbstractText") || qName.equals("LastName") || qName.equals("Initials")) accession = true;
+            }
+
+            @Override
+            public void endElement(String uri, String localName, String qName) throws SAXException { }
+
+            @Override
+            public void characters(char[] ch, int start, int length) throws SAXException {
+                if (accession){
+                    String temp = new String (ch, start, length).trim();
+
+                    if (tag.equals("LastName")) lastName = temp;
+                    else if (tag.equals("Initials")){
+                        if (AsyncStorage.getInstance().getStorage().containsKey("authors")){
+                            temp = AsyncStorage.getInstance().getStorage().get("authors") + ", " + lastName + " " +  temp + ".";
+                        } else {
+                            temp = lastName + " " +  temp + ".";
+                        }
+                        AsyncStorage.getInstance().getStorage().put("authors", temp);
+                    }
+                    else{
+                        AsyncStorage.getInstance().getStorage().put(tag,temp);
+                    }
+                    accession = false;
+                }
+            }
+        };
+        saxParser.parse("ref_"+id+".txt",handler);
+
+        //COPIAR CONTENIDO A OBJETO
+        reference.setId(id);
+        reference.setArticleAbstract(storage.get("AbstractText"));
+        reference.setAuthors(storage.get("authors"));
+        reference.setPublicationTitle(storage.get("Title"));
+        reference.setTitle(storage.get("ArticleTitle"));
+
+        //LIMPIAR
+        storage.clear();
+
+        return reference;
+    }
+
+
 }

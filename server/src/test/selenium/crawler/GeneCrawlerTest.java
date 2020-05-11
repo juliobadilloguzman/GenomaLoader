@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 import selenium.bean.Allele;
 import selenium.bean.Gene;
+import selenium.bean.Reference;
 import selenium.crawler.GeneCrawler;
 import selenium.util.drivers.BrowserDriver;
 import selenium.util.drivers.BrowserOption;
@@ -14,6 +15,7 @@ import selenium.util.drivers.EnhancedWebDriver;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -46,6 +48,11 @@ public class GeneCrawlerTest {
         System.out.println(gene.toString());
         System.out.println(allele.toString());
 
+        ArrayList<String> references = GeneCrawler.getAlleleBibliography(driver, id);
+        Reference ref = GeneCrawler.getReferenceData(driver, references.get(0));
+
+        System.out.println(ref);
+
         assertThat("id did not match",
                 gene.getId(),
                 is(equalTo(id))
@@ -74,6 +81,11 @@ public class GeneCrawlerTest {
         assertThat("Summary was empty",
                 gene.getSummary(),
                 is(not(equalTo("")))
+        );
+
+        assertThat("Reference count did not match expected",
+                references.size(),
+                is(equalTo(405))
         );
 
     }
