@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Allele implements Serializable {
     //Id del dbms
-    private Integer idAllele;
+    private Integer idAllele, idGene;
     //Atributos recolectados
     private String geneAccession, sequenceStart, sequenceEnd, strand, sequence;
 
@@ -12,8 +12,9 @@ public class Allele implements Serializable {
         this.idAllele = 0;
     }
 
-    public Allele(Integer idAllele, String geneAccession, String sequenceStart, String sequenceEnd, String strand, String sequence) {
+    public Allele(Integer idAllele, Integer idGene, String geneAccession, String sequenceStart, String sequenceEnd, String strand, String sequence) {
         this.idAllele = idAllele;
+        this.idGene = idGene;
         this.geneAccession = geneAccession;
         this.sequenceStart = sequenceStart;
         this.sequenceEnd = sequenceEnd;
@@ -27,6 +28,14 @@ public class Allele implements Serializable {
 
     public void setIdAllele(Integer idAllele) {
         this.idAllele = idAllele;
+    }
+
+    public Integer getIdGene() {
+        return idGene;
+    }
+
+    public void setIdGene(Integer idGene) {
+        this.idGene = idGene;
     }
 
     public String getGeneAccession() {
@@ -73,6 +82,7 @@ public class Allele implements Serializable {
     public String toString() {
         return "Allele{" +
                 "idAllele=" + idAllele +
+                ", idGene=" + idGene +
                 ", geneAccession='" + geneAccession + '\'' +
                 ", sequenceStart='" + sequenceStart + '\'' +
                 ", sequenceEnd='" + sequenceEnd + '\'' +
