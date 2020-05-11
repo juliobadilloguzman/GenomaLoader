@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/GenomaLoader.iml" filepath="$PROJECT_DIR$/.idea/GenomaLoader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/gen-loader.iml" filepath="$PROJECT_DIR$/server/gen-loader.iml" />
     </modules>
   </component>
 </project>
