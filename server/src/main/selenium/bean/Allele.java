@@ -6,18 +6,19 @@ public class Allele implements Serializable {
     //Id del dbms
     private Integer idAllele;
     //Atributos recolectados
-    private String geneAccession, sequenceStart, sequenceEnd, strand;
+    private String geneAccession, sequenceStart, sequenceEnd, strand, sequence;
 
     public Allele() {
         this.idAllele = 0;
     }
 
-    public Allele(Integer idAllele, String geneAccession, String sequenceStart, String sequenceEnd, String strand) {
+    public Allele(Integer idAllele, String geneAccession, String sequenceStart, String sequenceEnd, String strand, String sequence) {
         this.idAllele = idAllele;
         this.geneAccession = geneAccession;
         this.sequenceStart = sequenceStart;
         this.sequenceEnd = sequenceEnd;
         this.strand = strand;
+        this.sequence = sequence;
     }
 
     public Integer getIdAllele() {
@@ -60,6 +61,14 @@ public class Allele implements Serializable {
         this.strand = strand;
     }
 
+    public String getSequence() {
+        return strand;
+    }
+
+    public void setSequence(String strand) {
+        this.strand = strand;
+    }
+
     @Override
     public String toString() {
         return "Allele{" +
@@ -68,6 +77,7 @@ public class Allele implements Serializable {
                 ", sequenceStart='" + sequenceStart + '\'' +
                 ", sequenceEnd='" + sequenceEnd + '\'' +
                 ", strand='" + strand + '\'' +
+                ", sequence='" + sequence + '\'' +
                 '}';
     }
 }
