@@ -8,7 +8,6 @@ import org.xml.sax.SAXException;
 import selenium.bean.Allele;
 import selenium.bean.Gene;
 import selenium.bean.Reference;
-import selenium.crawler.GeneCrawler;
 import selenium.util.drivers.BrowserDriver;
 import selenium.util.drivers.BrowserOption;
 import selenium.util.drivers.EnhancedWebDriver;
@@ -43,15 +42,21 @@ public class GeneCrawlerTest {
         );
 
         Gene gene = GeneCrawler.getGeneInfo(driver, id);
-        Allele allele = GeneCrawler.getAlleleInfo(driver,id);
+        Allele allele = GeneCrawler.getAlleleInfo(id);
+        GeneCrawler.getSequenceData(allele);
 
         System.out.println(gene.toString());
         System.out.println(allele.toString());
 
-        ArrayList<String> references = GeneCrawler.getAlleleBibliography(driver, id);
-        Reference ref = GeneCrawler.getReferenceData(driver, references.get(0));
+        ArrayList<String> references = GeneCrawler.getBibliographyLinks("allele_"+id+".txt");
+        Reference ref = GeneCrawler.getReferenceData(references.get(0));
 
+        System.out.println(references);
         System.out.println(ref);
+
+        //references = GeneCrawler.getBibliographyLinks("sequence_"+allele.getGeneAccession()+".txt");
+        //ref = GeneCrawler.getReferenceData(references.get(0));
+
 
         assertThat("id did not match",
                 gene.getId(),

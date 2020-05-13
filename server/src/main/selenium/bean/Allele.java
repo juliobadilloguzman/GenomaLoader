@@ -71,11 +71,11 @@ public class Allele implements Serializable {
     }
 
     public String getSequence() {
-        return strand;
+        return sequence;
     }
 
-    public void setSequence(String strand) {
-        this.strand = strand;
+    public void setSequence(String sequence) {
+        this.sequence = sequence;
     }
 
     @Override
