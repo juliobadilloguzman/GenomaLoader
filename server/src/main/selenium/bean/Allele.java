@@ -10,6 +10,7 @@ public class Allele implements Serializable {
 
     public Allele() {
         this.idAllele = 0;
+        this.idGene = 0;
     }
 
     public Allele(Integer idAllele, Integer idGene, String geneAccession, String sequenceStart, String sequenceEnd, String strand, String sequence) {

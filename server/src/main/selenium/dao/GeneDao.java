@@ -8,19 +8,22 @@ import java.sql.*;
 public class GeneDao implements IGeneDao {
     @Override
     public String storeGene(Gene gene) throws SQLException {
-        Connection connection = MySQLConnection.getConnection("parcial2", "root","");
+        Connection connection = MySQLConnection.getConnection("dba_parcial2", "root","5th1ra5ukham45anam");
         try{
-            String query = "INSERT INTO gene VALUES(?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, gene.getIdGene());
-            ps.setString(2, gene.getId());
-            ps.setString(3, gene.getName());
-            ps.setString(4, gene.getNomenclatureName());
-            ps.setString(5, gene.getSummary());
-            ps.setString(6, gene.getChromosome());
-            ps.setString(7, gene.getLocus());
-            ResultSet rs = ps.executeQuery();
+            String query = "CALL gene_C(?, ?, ?, ?, ?, ?)";
+            CallableStatement cs = connection.prepareCall(query);
+            cs.setString(1, gene.getId());
+            cs.setString(2, gene.getName());
+            cs.setString(3, gene.getNomenclatureName());
+            cs.setString(4, gene.getSummary());
+            cs.setInt(5, Integer.parseInt(gene.getChromosome()));
+            cs.setString(6, gene.getLocus());
+            ResultSet rs = cs.executeQuery();
             if (rs.next()){
+                gene.setIdGene(rs.getInt("idGene"));
+                rs.close();
+                cs.close();
+                connection.close();
                 return "Gene stored successfully";
             }
         } catch(Exception ex) {

@@ -32,6 +32,7 @@ public class Controller {
 
             //Conseguir info allele
             Allele allele = GeneCrawler.getAlleleInfo(id);
+            allele.setIdGene(gene.getIdGene());
             GeneCrawler.getSequenceData(allele);
             System.out.println(allele.toString());
             AlleleDao ad = new AlleleDao();

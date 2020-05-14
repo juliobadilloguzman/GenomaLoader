@@ -9,18 +9,21 @@ import java.sql.*;
 public class ReferenceDao implements IReferenceDao {
     @Override
     public String storeReference(Reference reference) throws SQLException {
-        Connection connection = MySQLConnection.getConnection("parcial2", "root","");
+        Connection connection = MySQLConnection.getConnection("dba_parcial2", "root","5th1ra5ukham45anam");
         try{
-            String query = "INSERT INTO reference VALUES(?, ?, ?, ?, ?, ?)";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, reference.getIdReference());
-            ps.setString(2, reference.getId());
-            ps.setString(3, reference.getTitle());
-            ps.setString(4, reference.getAuthors());
-            ps.setString(5, reference.getArticleAbstract());
-            ps.setString(6, reference.getPublicationTitle());
-            ResultSet rs = ps.executeQuery();
+            String query = "CALL reference_C(?, ?, ?, ?, ?)";
+            CallableStatement cs = connection.prepareCall(query);
+            cs.setString(1, reference.getId());
+            cs.setString(2, reference.getTitle());
+            cs.setString(3, reference.getAuthors());
+            cs.setString(4, reference.getArticleAbstract());
+            cs.setString(5, reference.getPublicationTitle());
+            ResultSet rs = cs.executeQuery();
             if (rs.next()){
+                reference.setIdReference(rs.getInt("idReference"));
+                rs.close();
+                cs.close();
+                connection.close();
                 return "Reference stored successfully";
             }
         } catch(Exception ex) {
