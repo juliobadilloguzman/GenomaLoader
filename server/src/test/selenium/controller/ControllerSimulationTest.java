@@ -30,9 +30,9 @@ public class ControllerSimulationTest {
         //Conseguir info gene
         String id = GeneCrawler.getGeneId(geneName);
         Gene gene = GeneCrawler.getGeneInfo(id);
-        System.out.println(gene.toString());
         GeneDao ed = new GeneDao();
         ed.storeGene(gene);
+        System.out.println(gene.toString());
 
         //Esperar al sitio
         Thread.sleep(1500);
@@ -41,9 +41,9 @@ public class ControllerSimulationTest {
         Allele allele = GeneCrawler.getAlleleInfo(id);
         allele.setIdGene(gene.getIdGene());
         GeneCrawler.getSequenceData(allele);
-        System.out.println(allele.toString());
         AlleleDao ad = new AlleleDao();
         ad.storeAllele(allele);
+        System.out.println(allele.toString());
 
         //Conseguir referencias
         ReferenceMemory refMemory = ReferenceMemory.getInstance();
