@@ -8,7 +8,7 @@ import java.sql.*;
 public class AlleleDao implements IAlleleDao {
     @Override
     public String storeAllele(Allele allele) throws SQLException {
-        Connection connection = MySQLConnection.getConnection("dba_parcial2", "root","5th1ra5ukham45anam");
+        Connection connection = MySQLConnection.getConnection("parcial2", "root","5th1ra5ukham45anam");
         try{
             String query = "CALL allele_C(?, ?, ?, ?, ?, ?)";
             CallableStatement cs = connection.prepareCall(query);

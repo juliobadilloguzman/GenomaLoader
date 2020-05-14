@@ -44,6 +44,7 @@ public class ReferenceMemoryTest {
         referenceMemory.queueReference("20886638");
         referenceMemory.writeReferences();
 
+        System.out.println(referenceMemory.getReference("15054843").getIdReference());
 
         //American journal of medical genetics. Part A
         assertThat("title did not match",

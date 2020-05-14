@@ -5,6 +5,7 @@ import selenium.bean.Gene;
 import selenium.crawler.GeneCrawler;
 import selenium.dao.AlleleDao;
 import selenium.dao.GeneDao;
+import selenium.dao.LinkReferenceDao;
 import selenium.util.ReferenceMemory;
 
 import javax.jws.WebParam;
@@ -19,7 +20,6 @@ public class Controller {
     @Produces(MediaType.APPLICATION_JSON)
     public String addGene(@PathParam("id") String geneName) {
         try{
-
             //Conseguir info gene
             String id = GeneCrawler.getGeneId(geneName);
             Gene gene = GeneCrawler.getGeneInfo(id);
@@ -46,16 +46,17 @@ public class Controller {
             for (String ref : referencesSequence) refMemory.queueReference(ref);
             refMemory.writeReferences();
 
+            LinkReferenceDao linkReferenceDao = new LinkReferenceDao();
+
             //Relacion muchos a muchos
             for (String ref : referencesAllele){
                 //Relacionar alelo con referencias
-                //allele.getIdAllele();
-                //refMemory.getReference(ref).getIdReference();
+                linkReferenceDao.linkReference(refMemory.getReference(ref), allele);
+
             }
             for (String ref : referencesSequence){
                 //Relacionar alelo con referencias
-                //allele.getIdAllele();
-                //refMemory.getReference(ref).getIdReference();
+                linkReferenceDao.linkReference(refMemory.getReference(ref), allele);
             }
 
             return "Success";
