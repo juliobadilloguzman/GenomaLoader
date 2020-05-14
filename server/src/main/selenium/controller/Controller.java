@@ -15,7 +15,7 @@ import java.util.ArrayList;
 @Path("/gene")
 public class Controller {
     @POST
-    @Path("/test/{id}")
+    @Path("/load/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String addGene(@PathParam("id") String geneName) {
         try{

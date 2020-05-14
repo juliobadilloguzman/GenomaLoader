@@ -3,9 +3,11 @@ package selenium.util;
 import org.xml.sax.SAXException;
 import selenium.bean.Reference;
 import selenium.crawler.GeneCrawler;
+import selenium.dao.ReferenceDao;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -32,12 +34,12 @@ public class ReferenceMemory {
         }
     }
 
-    public void writeReferences() throws IOException, SAXException, ParserConfigurationException {
+    public void writeReferences() throws IOException, SAXException, ParserConfigurationException, SQLException {
         for (String link : newReferences) {
             Reference reference = GeneCrawler.getReferenceData(link);
 
-            //ReferenceDao refDao = new ReferenceDao();
-            //refDao.storeReference(ref);
+            ReferenceDao refDao = new ReferenceDao();
+            refDao.storeReference(reference);
 
             System.out.println(reference);
             knownReferences.put(link,reference);

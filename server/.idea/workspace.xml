@@ -8,13 +8,31 @@
   <component name="ChangeListManager">
     <list default="true" id="c1bf1bc4-ec88-4947-b26b-59a4e34b82c4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen-loader.iml" beforeDir="false" afterPath="$PROJECT_DIR$/gen-loader.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tempFiles/allele/allele_2200.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tempFiles/gene/gene_FBN1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tempFiles/gene_info/gene_2200.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tempFiles/ref/ref_20886638.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tempFiles/sequence/sequence_NG_008805.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/selenium/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/selenium/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/selenium/util/ReferenceMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/selenium/util/ReferenceMemory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/bean/Allele.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/bean/AlleleBibliography.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/bean/Gene.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/bean/GeneBibliography.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/bean/Reference.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/controller/Controller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/crawler/GeneCrawler$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/crawler/GeneCrawler$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/crawler/GeneCrawler$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/crawler/GeneCrawler$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/crawler/GeneCrawler$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/crawler/GeneCrawler$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/crawler/GeneCrawler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/dao/AlleleDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/dao/GeneDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/dao/IAlleleDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/dao/IGeneDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/dao/IReferenceDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/dao/ReferenceDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/util/AsyncStorage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/util/MySQLConnection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/util/ReferenceMemory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/util/XmlReader.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,10 +60,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/selenium/controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-17">
-              <caret line="19" column="61" selection-start-line="19" selection-start-column="61" selection-end-line="19" selection-end-column="61" />
+            <state relative-caret-position="255">
+              <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2390#2391#0" expanded="true" />
                 <element signature="e#2421#2422#0" expanded="true" />
               </folding>
             </state>
@@ -55,8 +74,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/selenium/util/ReferenceMemory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="41" column="42" selection-start-line="41" selection-start-column="42" selection-end-line="41" selection-end-column="42" />
+            <state relative-caret-position="323">
+              <caret line="19" column="30" lean-forward="true" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -67,14 +86,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/selenium/crawler/ReferenceMemoryTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="50" column="36" lean-forward="true" selection-start-line="50" selection-start-column="36" selection-end-line="50" selection-end-column="36" />
+            <state relative-caret-position="578">
+              <caret line="50" column="36" selection-start-line="50" selection-start-column="36" selection-end-line="50" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#272#273#0" expanded="true" />
-                <element signature="e#335#336#0" expanded="true" />
-                <element signature="e#398#399#0" expanded="true" />
-                <element signature="e#436#437#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -83,8 +98,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/selenium/crawler/GeneCrawlerTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="702">
-              <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+            <state relative-caret-position="663">
+              <caret line="51" selection-start-line="51" selection-end-line="51" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -218,14 +233,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="selenium" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="selenium" type="462c0819:PsiDirectoryNode" />
               <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -269,18 +276,24 @@
               <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="tempFiles" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="tempFiles" type="462c0819:PsiDirectoryNode" />
+              <item name="ref" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1589429075950" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1589430500264" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/seleniumLib/selenium-server-standalone-3.141.0.jar!/" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -437,7 +450,8 @@
       <workItem from="1589162709092" duration="7115000" />
       <workItem from="1589214990363" duration="23000" />
       <workItem from="1589398092993" duration="8174000" />
-      <workItem from="1589411811676" duration="17237000" />
+      <workItem from="1589411811676" duration="18757000" />
+      <workItem from="1589474320829" duration="332000" />
     </task>
     <servers />
   </component>
@@ -474,7 +488,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="68614000" />
+    <option name="totallyTimeSpent" value="70466000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -495,7 +509,7 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Web" order="4" side_tool="true" />
       <window_info id="Designer" order="5" />
-      <window_info content_ui="combo" id="Project" order="6" visible="true" weight="0.2677761" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.27155825" />
       <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.3289689" />
       <window_info anchor="bottom" id="Docker" order="1" show_stripe_button="false" />
@@ -507,7 +521,7 @@
       <window_info anchor="bottom" id="Application Servers" order="7" weight="0.3289689" />
       <window_info anchor="bottom" id="Message" order="8" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Run" order="10" visible="true" weight="0.30441898" />
+      <window_info anchor="bottom" id="Run" order="10" weight="0.049099836" />
       <window_info anchor="bottom" id="Debug" order="11" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="12" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="13" weight="0.4" />
@@ -553,6 +567,20 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/selenium/util/example.java" />
@@ -577,9 +605,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ref_20886638.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/ref_20886638.txt" />
     <entry file="file://$PROJECT_DIR$/src/main/selenium/bean/Gene.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -592,16 +618,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="14">
           <caret line="76" column="43" selection-start-line="76" selection-start-column="43" selection-end-line="76" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/selenium/util/XmlReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -619,60 +635,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/allele_2200.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret column="207449" selection-start-column="207441" selection-end-column="207449" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sequence_NG_008805.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9095">
-          <caret column="140355" selection-start-column="140355" selection-end-column="140355" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tempFiles/allele/allele_2200.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/selenium/util/drivers/EnhancedWebDriver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="27" column="25" lean-forward="true" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/selenium/util/drivers/BrowserDriver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="73" selection-start-line="14" selection-start-column="67" selection-end-line="14" selection-end-column="73" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/selenium/util/drivers/BrowserOption.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/selenium/util/drivers/WebDriverDecorator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="15" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/allele_2200.txt" />
+    <entry file="file://$PROJECT_DIR$/sequence_NG_008805.txt" />
+    <entry file="file://$PROJECT_DIR$/tempFiles/allele/allele_2200.txt" />
+    <entry file="file://$PROJECT_DIR$/src/main/selenium/util/drivers/EnhancedWebDriver.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/selenium/util/drivers/BrowserDriver.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/selenium/util/drivers/BrowserOption.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/selenium/util/drivers/WebDriverDecorator.java" />
     <entry file="file://$PROJECT_DIR$/src/main/selenium/dao/IReferenceDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -728,52 +697,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/selenium/util/ReferenceMemory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="41" column="42" selection-start-line="41" selection-start-column="42" selection-end-line="41" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/selenium/crawler/ReferenceMemoryTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="50" column="36" lean-forward="true" selection-start-line="50" selection-start-column="36" selection-end-line="50" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#272#273#0" expanded="true" />
-            <element signature="e#335#336#0" expanded="true" />
-            <element signature="e#398#399#0" expanded="true" />
-            <element signature="e#436#437#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/selenium/crawler/GeneCrawlerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/index.jsp">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/selenium/controller/Controller.java">
+    <entry file="file://$PROJECT_DIR$/src/test/selenium/crawler/ReferenceMemoryTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-17">
-          <caret line="19" column="61" selection-start-line="19" selection-start-column="61" selection-end-line="19" selection-end-column="61" />
+        <state relative-caret-position="578">
+          <caret line="50" column="36" selection-start-line="50" selection-start-column="36" selection-end-line="50" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/selenium/crawler/GeneCrawlerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="51" selection-start-line="51" selection-end-line="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/selenium/util/XmlReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/selenium/util/ReferenceMemory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="30" lean-forward="true" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/selenium/controller/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2390#2391#0" expanded="true" />
             <element signature="e#2421#2422#0" expanded="true" />
           </folding>
         </state>
