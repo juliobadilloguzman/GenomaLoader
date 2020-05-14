@@ -1,7 +1,5 @@
 package selenium.crawler;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -10,7 +8,6 @@ import selenium.bean.Gene;
 import selenium.bean.Reference;
 import selenium.util.AsyncStorage;
 import selenium.util.XmlReader;
-import selenium.util.drivers.EnhancedWebDriver;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -18,145 +15,113 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class GeneCrawler {
 
-    private static ArrayList<String> splitLine(String line){
-        ArrayList<String> result = new ArrayList<>();
+    public static String getGeneId(String gene) throws IOException, ParserConfigurationException, SAXException {
+        String result;
 
-        //VALIDAR QUE CONTENGA TEXTO
-        line = line.substring(line.indexOf(">")+1);
-        if (!line.equals("")){
+        //GUARDAR XML
+        XmlReader.downloadFile(
+                "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term="+gene+"[Gene%20Name]+AND+%22Homo%20sapiens%22[Organism]",
+                "tempFiles\\gene\\gene_"+gene+".txt"
+        );
 
-            //EXTRAER INFORMACION
-            String node, tag;
-            Integer pos = line.indexOf("<");
-            node = line.substring(0,pos);
-            tag = line.substring(pos+2);
-            tag = tag.substring(0,tag.length()-1);
+        //ALMACENAMIENTO DURANTE LECTURA ASYNC
+        HashMap<String,String> storage = AsyncStorage.getInstance().getStorage();
+        storage.clear();
 
-            result.add(tag);
-            result.add(node);
-        }
+        //LECTOR DE ARCHIVO XML ASYNC
+        SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+        DefaultHandler handler = new DefaultHandler(){
+            Boolean accession = false;
 
-        return result;
-    }
-
-    private static ArrayList<String> splitCollapsable(WebElement collapsable){
-        ArrayList<String> result = new ArrayList<>();
-
-        WebElement parent = collapsable.findElement(By.xpath("./.."));
-        if (parent != null) {
-            String line = parent.getText();
-
-            //VALIDAR QUE CONTENGA TEXTO
-            line = line.substring(line.indexOf("\n") + 1);
-            if (!line.equals("")) {
-
-                //EXTRAER INFORMACION
-                String node, tag;
-                Integer pos = line.indexOf("\n");
-                node = line.substring(0, pos);
-                tag = line.substring(pos + 3);
-                tag = tag.substring(0, tag.length() - 1);
-
-                result.add(tag);
-                result.add(node);
-            }
-        }
-        return result;
-    }
-
-
-    public static String getGeneId(EnhancedWebDriver myDriver, String gene) throws InterruptedException {
-
-        //IR A LA PAGINA
-        myDriver.get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term="+gene+"[Gene%20Name]+AND+%22Homo%20sapiens%22[Organism]");
-
-        //CONSEGUIR CADA LINEA
-        List<WebElement> lines = myDriver.findDynamicElements(By.className("line"));
-        if (lines != null) {
-            for (WebElement line : lines){
-
-                //VALIDAR QUE CONTENGA TEXTO
-                ArrayList<String> tagAndNode = splitLine(line.getText());
-                if (tagAndNode.size()==2) {
-                    //DEVOLVER ID
-                    if (tagAndNode.get(0).toUpperCase().equals("ID")) {
-                        return tagAndNode.get(1);
-                    }
+            @Override
+            public void startElement(String uri, String localName, String qName, Attributes attributes) {
+                if (qName.toUpperCase().equals("ID")){
+                    accession = true;
                 }
             }
-        }
 
-        return "";
+            @Override
+            public void characters(char[] ch, int start, int length) {
+                if (accession){
+                    String temp = new String (ch, start, length).trim();
+                    AsyncStorage.getInstance().getStorage().put("id",temp);
+                    accession = false;
+                }
+            }
+        };
+        saxParser.parse("tempFiles\\gene\\gene_"+gene+".txt",handler);
 
+        //COPIAR CONTENIDO
+        result = storage.get("id");
+
+        //LIMPIAR
+        storage.clear();
+
+        return result;
     }
 
-    public static Gene getGeneInfo(EnhancedWebDriver myDriver, String id) throws InterruptedException {
-        ArrayList<String> result = new ArrayList<>();
+    public static Gene getGeneInfo(String id) throws IOException, ParserConfigurationException, SAXException {
         Gene gene = new Gene();
         gene.setId(id);
 
-        //IR A LA PAGINA
-        myDriver.get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id="+id+"&retmode=xml");
+        //GUARDAR XML
+        XmlReader.downloadFile(
+                "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id="+id+"&retmode=xml",
+                "tempFiles\\gene_info\\gene_"+id+".txt"
+        );
 
-        //CONSEGUIR CADA LINEA
-        List<WebElement> lines = myDriver.findDynamicElements(By.className("line"));
-        if (lines != null) {
-            for (WebElement line : lines) {
 
-                //VALIDAR QUE CONTENGA TEXTO
-                ArrayList<String> tagAndNode = splitLine(line.getText());
-                if (tagAndNode.size() == 2) {
-                    //MOSTRAR DATOS
-                    switch (tagAndNode.get(0).toUpperCase()) {
-                        case "NAME":
-                            result.add(tagAndNode.get(1));
-                            gene.setName(tagAndNode.get(1));
-                            break;
-                        case "NOMENCLATURENAME":
-                            result.add(tagAndNode.get(1));
-                            gene.setNomenclatureName(tagAndNode.get(1));
-                            break;
-                        case "CHROMOSOME":
-                            result.add(tagAndNode.get(1));
-                            gene.setChromosome(tagAndNode.get(1));
-                            break;
-                        case "MAPLOCATION":
-                            result.add(tagAndNode.get(1));
-                            gene.setLocus(tagAndNode.get(1));
-                            break;
-                    }
-                } else {
-                    if (line.getText().equals("<Summary>")) {
-                        //VALIDAR QUE CONTENGA TEXTO
-                        tagAndNode = splitCollapsable(line);
-                        if (tagAndNode.size() == 2) {
-                            //MOSTRAR DATOS
-                            if (tagAndNode.get(0).toUpperCase().equals("SUMMARY")) {
-                                result.add(tagAndNode.get(1));
-                                gene.setSummary(tagAndNode.get(1));
-                            }
-                        }
-                    }
-                }
+        //ALMACENAMIENTO DURANTE LECTURA ASYNC
+        HashMap<String,String> storage = AsyncStorage.getInstance().getStorage();
+        storage.clear();
 
-                if (result.size() == 5) break;
+        //LECTOR DE ARCHIVO XML ASYNC
+        SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+        DefaultHandler handler = new DefaultHandler(){
+            Boolean accession = false;
+            String tag;
+
+            @Override
+            public void startElement(String uri, String localName, String qName, Attributes attributes){
+                tag = qName;
+                if (qName.equals("Name") || qName.equals("NomenclatureName") || qName.equals("Chromosome") || qName.equals("MapLocation") || qName.equals("Summary")) accession = true;
             }
-        }
+
+            @Override
+            public void characters(char[] ch, int start, int length){
+                if (accession){
+                    String temp = new String (ch, start, length).trim();
+                    AsyncStorage.getInstance().getStorage().put(tag,temp);
+                    accession = false;
+                }
+            }
+        };
+        saxParser.parse("tempFiles\\gene_info\\gene_"+id+".txt",handler);
+
+        //COPIAR CONTENIDO A OBJETO
+        gene.setName(storage.get("Name"));
+        gene.setNomenclatureName(storage.get("NomenclatureName"));
+        gene.setChromosome(storage.get("Chromosome"));
+        gene.setLocus(storage.get("MapLocation"));
+        gene.setSummary(storage.get("Summary"));
+
+        //LIMPIAR
+        storage.clear();
+
         return gene;
     }
 
 
-    public static Allele getAlleleInfo(String id) throws InterruptedException, ParserConfigurationException, SAXException, IOException {
+    public static Allele getAlleleInfo(String id) throws ParserConfigurationException, SAXException, IOException {
         Allele allele = new Allele();
 
         //GUARDAR XML
         XmlReader.downloadFile(
                 "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=gene&id="+id+"&report=sgml&retmode=xml",
-                "allele_"+id+".txt"
+                "tempFiles\\allele\\allele_"+id+".txt"
         );
 
         //ALMACENAMIENTO DURANTE LECTURA ASYNC
@@ -170,7 +135,7 @@ public class GeneCrawler {
             String tag = "";
 
             @Override
-            public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+            public void startElement(String uri, String localName, String qName, Attributes attributes) {
                 tag = qName;
                 if (qName.toUpperCase().equals("GENE-COMMENTARY_ACCESSION")) accession = true;
                 else if (qName.equals("Seq-id_gi")) accession = false;
@@ -180,10 +145,7 @@ public class GeneCrawler {
             }
 
             @Override
-            public void endElement(String uri, String localName, String qName) throws SAXException { }
-
-            @Override
-            public void characters(char[] ch, int start, int length) throws SAXException {
+            public void characters(char[] ch, int start, int length){
                 if (accession){
                     String temp = new String (ch, start, length).trim();
                     if (tag.equals("Gene-commentary_accession") && !temp.equals("") && !temp.contains("NG_")){
@@ -198,7 +160,7 @@ public class GeneCrawler {
                 }
             }
         };
-        saxParser.parse("allele_"+id+".txt",handler);
+        saxParser.parse("tempFiles\\allele\\allele_"+id+".txt",handler);
 
         //COPIAR CONTENIDO A OBJETO
         allele.setGeneAccession(storage.get("Gene-commentary_accession"));
@@ -211,7 +173,7 @@ public class GeneCrawler {
         return allele;
     }
 
-    public static ArrayList<String> getBibliographyLinks(String fileName) throws InterruptedException, ParserConfigurationException, SAXException, IOException {
+    public static ArrayList<String> getBibliographyLinks(String fileName) throws ParserConfigurationException, SAXException, IOException {
 
         //ALMACENAMIENTO DURANTE LECTURA ASYNC
         HashMap<String,String> storage = AsyncStorage.getInstance().getStorage();
@@ -223,17 +185,14 @@ public class GeneCrawler {
             Boolean accession = false;
 
             @Override
-            public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+            public void startElement(String uri, String localName, String qName, Attributes attributes) {
                 if (qName.equals("PubMedId")){
                     accession = true;
                 }
             }
 
             @Override
-            public void endElement(String uri, String localName, String qName) throws SAXException { }
-
-            @Override
-            public void characters(char[] ch, int start, int length) throws SAXException {
+            public void characters(char[] ch, int start, int length) {
                 if (accession){
                     String temp = new String (ch, start, length).trim();
                     AsyncStorage.getInstance().getStorage().put(temp,temp);
@@ -251,13 +210,13 @@ public class GeneCrawler {
         return results;
     }
 
-    public static Reference getReferenceData(String id) throws InterruptedException, ParserConfigurationException, SAXException, IOException {
+    public static Reference getReferenceData(String id) throws ParserConfigurationException, SAXException, IOException {
         Reference reference = new Reference();
 
         //GUARDAR XML
         XmlReader.downloadFile(
                 "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id="+id,
-                "ref_"+id+".txt"
+                "tempFiles\\ref\\ref_"+id+".txt"
         );
 
         //ALMACENAMIENTO DURANTE LECTURA ASYNC
@@ -271,16 +230,13 @@ public class GeneCrawler {
             String tag, lastName;
 
             @Override
-            public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+            public void startElement(String uri, String localName, String qName, Attributes attributes) {
                 tag = qName;
                 if (qName.equals("Title") || qName.equals("ArticleTitle") || qName.equals("AbstractText") || qName.equals("LastName") || qName.equals("Initials")) accession = true;
             }
 
             @Override
-            public void endElement(String uri, String localName, String qName) throws SAXException { }
-
-            @Override
-            public void characters(char[] ch, int start, int length) throws SAXException {
+            public void characters(char[] ch, int start, int length) {
                 if (accession){
                     String temp = new String (ch, start, length).trim();
 
@@ -300,7 +256,7 @@ public class GeneCrawler {
                 }
             }
         };
-        saxParser.parse("ref_"+id+".txt",handler);
+        saxParser.parse("tempFiles\\ref\\ref_"+id+".txt",handler);
 
         //COPIAR CONTENIDO A OBJETO
         reference.setId(id);
@@ -315,14 +271,11 @@ public class GeneCrawler {
         return reference;
     }
 
-    // https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=NG_008805&rettype=gb&retmode=xml
-
-
-    public static void getSequenceData(Allele allele) throws InterruptedException, ParserConfigurationException, SAXException, IOException {
+    public static void getSequenceData(Allele allele) throws ParserConfigurationException, SAXException, IOException {
         //GUARDAR XML
         XmlReader.downloadFile(
                 "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="+allele.getGeneAccession()+"&rettype=gb&retmode=xml",
-                "sequence_"+allele.getGeneAccession()+".txt"
+                "tempFiles\\sequence\\sequence_"+allele.getGeneAccession()+".txt"
         );
 
         //ALMACENAMIENTO DURANTE LECTURA ASYNC
@@ -335,15 +288,12 @@ public class GeneCrawler {
             Boolean accession = false;
 
             @Override
-            public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+            public void startElement(String uri, String localName, String qName, Attributes attributes) {
                 if (qName.equals("GBSeq_sequence")) accession = true;
             }
 
             @Override
-            public void endElement(String uri, String localName, String qName) throws SAXException { }
-
-            @Override
-            public void characters(char[] ch, int start, int length) throws SAXException {
+            public void characters(char[] ch, int start, int length){
                 if (accession){
                     String temp = new String (ch, start, length).trim();
                     AsyncStorage.getInstance().getStorage().put("sequence",temp);
@@ -351,7 +301,7 @@ public class GeneCrawler {
                 }
             }
         };
-        saxParser.parse("sequence_"+allele.getGeneAccession()+".txt",handler);
+        saxParser.parse("tempFiles\\sequence\\sequence_"+allele.getGeneAccession()+".txt",handler);
 
         //COPIAR DATOS
         allele.setSequence(storage.get("sequence"));
