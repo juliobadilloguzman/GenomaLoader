@@ -24,8 +24,8 @@ public class Controller {
             String id = GeneCrawler.getGeneId(geneName);
             Gene gene = GeneCrawler.getGeneInfo(id);
             System.out.println(gene.toString());
-
-            //new GeneDao().storeGene(gene);
+            GeneDao ed = new GeneDao();
+            ed.storeGene(gene);
 
             //Esperar al sitio
             Thread.sleep(1500);
@@ -34,8 +34,8 @@ public class Controller {
             Allele allele = GeneCrawler.getAlleleInfo(id);
             GeneCrawler.getSequenceData(allele);
             System.out.println(allele.toString());
-
-            // new AlleleDao().storeAllele(allele);
+            AlleleDao ad = new AlleleDao();
+            ad.storeAllele(allele);
 
             //Conseguir referencias
             ReferenceMemory refMemory = ReferenceMemory.getInstance();
