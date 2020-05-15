@@ -41,8 +41,10 @@ public class Controller {
             Allele allele = GeneCrawler.getAlleleInfo(id);
             allele.setIdGene(gene.getIdGene());
             //Esperar al sitio
-            Thread.sleep(1500);
-            GeneCrawler.getSequenceData(allele);
+            if (allele.getGeneAccession()!=null){
+                Thread.sleep(1500);
+                GeneCrawler.getSequenceData(allele);
+            }
             AlleleDao ad = new AlleleDao();
             ad.storeAllele(allele);
 
@@ -50,8 +52,12 @@ public class Controller {
             ReferenceMemory refMemory = ReferenceMemory.getInstance();
             ArrayList<String> referencesAllele = GeneCrawler.getBibliographyLinks("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=gene&id="+id+"&report=sgml&retmode=xml");
             for (String ref : referencesAllele) refMemory.queueReference(ref);
-            ArrayList<String> referencesSequence = GeneCrawler.getBibliographyLinks("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="+allele.getGeneAccession()+"&rettype=gb&retmode=xml");
-            for (String ref : referencesSequence) refMemory.queueReference(ref);
+
+            ArrayList<String> referencesSequence = new ArrayList<>();
+            if (allele.getGeneAccession()!=null) {
+                referencesSequence = GeneCrawler.getBibliographyLinks("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=" + allele.getGeneAccession() + "&rettype=gb&retmode=xml");
+                for (String ref : referencesSequence) refMemory.queueReference(ref);
+            }
             refMemory.writeReferences();
 
             LinkReferenceDao linkReferenceDao = new LinkReferenceDao();
@@ -99,8 +105,10 @@ public class Controller {
             allele.setIdGene(gene.getIdGene());
             System.out.println(allele.toString());
             //Esperar al sitio
-            Thread.sleep(1500);
-            GeneCrawler.getSequenceData(allele);
+            if (allele.getGeneAccession()!=null){
+                Thread.sleep(1500);
+                GeneCrawler.getSequenceData(allele);
+            }
             AlleleDao ad = new AlleleDao();
             ad.storeAllele(allele);
 
@@ -110,8 +118,12 @@ public class Controller {
             ReferenceMemory refMemory = ReferenceMemory.getInstance();
             ArrayList<String> referencesAllele = GeneCrawler.getBibliographyLinks("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=gene&id="+id+"&report=sgml&retmode=xml");
             for (int i = 0; i< 5; i++) refMemory.queueReference(referencesAllele.get(i));
-            ArrayList<String> referencesSequence = GeneCrawler.getBibliographyLinks("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="+allele.getGeneAccession()+"&rettype=gb&retmode=xml");
-            for (String ref : referencesSequence) refMemory.queueReference(ref);
+
+            ArrayList<String> referencesSequence = new ArrayList<>();
+            if (allele.getGeneAccession()!=null) {
+                referencesSequence = GeneCrawler.getBibliographyLinks("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=" + allele.getGeneAccession() + "&rettype=gb&retmode=xml");
+                for (String ref : referencesSequence) refMemory.queueReference(ref);
+            }
             refMemory.writeReferences();
 
             LinkReferenceDao linkReferenceDao = new LinkReferenceDao();

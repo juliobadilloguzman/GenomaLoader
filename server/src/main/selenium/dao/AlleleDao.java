@@ -13,7 +13,8 @@ public class AlleleDao implements IAlleleDao {
             String query = "CALL allele_C(?, ?, ?, ?, ?, ?)";
             CallableStatement cs = connection.prepareCall(query);
             cs.setInt(1, allele.getIdGene());
-            cs.setString(2, allele.getGeneAccession());
+            if (allele.getGeneAccession()!= null) cs.setString(2, allele.getGeneAccession());
+            else cs.setString(2, "NA");
             cs.setString(3, allele.getSequenceStart());
             cs.setString(4, allele.getSequenceEnd());
             cs.setString(5, allele.getStrand());
