@@ -25,6 +25,7 @@ public class Controller {
         try{
             //Conseguir info gene
             String id = GeneCrawler.getGeneId(geneName);
+            if (id.equals("genDoesntExist")) return id;
             Gene gene = GeneCrawler.getGeneInfo(id);
             GeneDao ed = new GeneDao();
             ed.storeGene(gene);
@@ -77,6 +78,7 @@ public class Controller {
         try{
             //Conseguir info gene
             String id = GeneCrawler.getGeneId(geneName);
+            if (id.equals("genDoesntExist")) return id;
             Gene gene = GeneCrawler.getGeneInfo(id);
             GeneDao ed = new GeneDao();
             ed.storeGene(gene);

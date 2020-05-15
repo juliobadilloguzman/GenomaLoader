@@ -55,7 +55,8 @@ public class GeneCrawler {
         saxParser.parse("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term="+gene+"[Gene%20Name]+AND+%22Homo%20sapiens%22[Organism]",handler);
 
         //COPIAR CONTENIDO
-        result = storage.get("id");
+        if (storage.containsKey("id")) result = storage.get("id");
+        else result = "genDoesntExist";
 
         //LIMPIAR
         storage.clear();
