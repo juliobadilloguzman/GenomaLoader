@@ -6,11 +6,13 @@ import selenium.crawler.GeneCrawler;
 import selenium.dao.AlleleDao;
 import selenium.dao.GeneDao;
 import selenium.dao.LinkReferenceDao;
+import selenium.dao.Truncate;
 import selenium.util.ReferenceMemory;
 
 import javax.jws.WebParam;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Path("/gene")
@@ -126,6 +128,18 @@ public class Controller {
     @Produces(MediaType.APPLICATION_JSON)
     public String testCon(@PathParam("id") String geneName) {
         return "HELLO THERE " + geneName.toUpperCase();
+    }
+
+    @DELETE
+    @Path("/truncate")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String truncate() {
+        try {
+            return new Truncate().trunc();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "Failed to connect";
     }
 
 }
