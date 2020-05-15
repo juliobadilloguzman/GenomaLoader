@@ -9,7 +9,7 @@ import java.sql.*;
 public class ReferenceDao implements IReferenceDao {
     @Override
     public String storeReference(Reference reference) throws SQLException {
-        Connection connection = MySQLConnection.getConnection("parcial2", "root","5th1ra5ukham45anam");
+        Connection connection = MySQLConnection.getConnection();
         try{
             String query = "CALL reference_C(?, ?, ?, ?, ?)";
             CallableStatement cs = connection.prepareCall(query);

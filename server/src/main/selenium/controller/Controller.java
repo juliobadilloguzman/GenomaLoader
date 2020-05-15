@@ -19,11 +19,11 @@ public class Controller {
     @Path("/load/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String addGene(@PathParam("id") String geneName) {
+        geneName = geneName.toUpperCase();
         try{
             //Conseguir info gene
             String id = GeneCrawler.getGeneId(geneName);
             Gene gene = GeneCrawler.getGeneInfo(id);
-            System.out.println(gene.toString());
             GeneDao ed = new GeneDao();
             ed.storeGene(gene);
 
@@ -33,16 +33,17 @@ public class Controller {
             //Conseguir info allele
             Allele allele = GeneCrawler.getAlleleInfo(id);
             allele.setIdGene(gene.getIdGene());
+            //Esperar al sitio
+            Thread.sleep(1500);
             GeneCrawler.getSequenceData(allele);
-            System.out.println(allele.toString());
             AlleleDao ad = new AlleleDao();
             ad.storeAllele(allele);
 
             //Conseguir referencias
             ReferenceMemory refMemory = ReferenceMemory.getInstance();
-            ArrayList<String> referencesAllele = GeneCrawler.getBibliographyLinks("tempFiles\\allele\\allele_"+id+".txt");
+            ArrayList<String> referencesAllele = GeneCrawler.getBibliographyLinks("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=gene&id="+id+"&report=sgml&retmode=xml");
             for (String ref : referencesAllele) refMemory.queueReference(ref);
-            ArrayList<String> referencesSequence = GeneCrawler.getBibliographyLinks("tempFiles\\sequence\\sequence_"+allele.getGeneAccession()+".txt");
+            ArrayList<String> referencesSequence = GeneCrawler.getBibliographyLinks("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="+allele.getGeneAccession()+"&rettype=gb&retmode=xml");
             for (String ref : referencesSequence) refMemory.queueReference(ref);
             refMemory.writeReferences();
 
@@ -66,11 +67,61 @@ public class Controller {
         }
     }
 
-    @GET
+    @POST
     @Path("/test/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String test(@PathParam("id") String geneName) {
-        return geneName;
+        geneName = geneName.toUpperCase();
+        try{
+            //Conseguir info gene
+            String id = GeneCrawler.getGeneId(geneName);
+            Gene gene = GeneCrawler.getGeneInfo(id);
+            GeneDao ed = new GeneDao();
+            ed.storeGene(gene);
+
+            //Esperar al sitio
+            Thread.sleep(1500);
+
+            //Conseguir info allele
+            Allele allele = GeneCrawler.getAlleleInfo(id);
+            allele.setIdGene(gene.getIdGene());
+            //Esperar al sitio
+            Thread.sleep(1500);
+            GeneCrawler.getSequenceData(allele);
+            AlleleDao ad = new AlleleDao();
+            ad.storeAllele(allele);
+
+            //Conseguir referencias
+            ReferenceMemory refMemory = ReferenceMemory.getInstance();
+            ArrayList<String> referencesAllele = GeneCrawler.getBibliographyLinks("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=gene&id="+id+"&report=sgml&retmode=xml");
+            for (int i = 0; i< 5; i++) refMemory.queueReference(referencesAllele.get(i));
+            ArrayList<String> referencesSequence = GeneCrawler.getBibliographyLinks("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="+allele.getGeneAccession()+"&rettype=gb&retmode=xml");
+            for (String ref : referencesSequence) refMemory.queueReference(ref);
+            refMemory.writeReferences();
+
+            LinkReferenceDao linkReferenceDao = new LinkReferenceDao();
+
+            //Relacion muchos a muchos
+            for (int i = 0; i< 5; i++){
+                linkReferenceDao.linkReference(refMemory.getReference(referencesAllele.get(i)),allele);
+            }
+            for (String ref : referencesSequence){
+                //Relacionar alelo con referencias
+                linkReferenceDao.linkReference(refMemory.getReference(ref), allele);
+            }
+
+            return "Success";
+
+        }catch (Exception ex){
+            return ex.getMessage();
+        }
+    }
+
+    @GET
+    @Path("/check/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String testCon(@PathParam("id") String geneName) {
+        return "HELLO THERE " + geneName.toUpperCase();
     }
 
 }

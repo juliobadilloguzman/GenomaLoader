@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class LinkReferenceDao {
     public String linkReference(Reference reference, Allele allele) throws SQLException {
-        Connection connection = MySQLConnection.getConnection("parcial2", "root","5th1ra5ukham45anam");
+        Connection connection = MySQLConnection.getConnection();
         try{
             String query = "INSERT INTO allele_biblography(allele_biblography.id_allele, allele_biblography.id_reference)VALUES (?, ?)";
             PreparedStatement ps = connection.prepareStatement(query);

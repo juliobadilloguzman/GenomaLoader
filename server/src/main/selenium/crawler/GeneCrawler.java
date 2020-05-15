@@ -22,10 +22,10 @@ public class GeneCrawler {
         String result;
 
         //GUARDAR XML
-        XmlReader.downloadFile(
-                "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term="+gene+"[Gene%20Name]+AND+%22Homo%20sapiens%22[Organism]",
-                "tempFiles\\gene\\gene_"+gene+".txt"
-        );
+        //XmlReader.downloadFile(
+          //      "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term="+gene+"[Gene%20Name]+AND+%22Homo%20sapiens%22[Organism]",
+          //      "tempFiles\\gene\\gene_"+gene+".txt"
+        //);
 
         //ALMACENAMIENTO DURANTE LECTURA ASYNC
         HashMap<String,String> storage = AsyncStorage.getInstance().getStorage();
@@ -52,7 +52,7 @@ public class GeneCrawler {
                 }
             }
         };
-        saxParser.parse("tempFiles\\gene\\gene_"+gene+".txt",handler);
+        saxParser.parse("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term="+gene+"[Gene%20Name]+AND+%22Homo%20sapiens%22[Organism]",handler);
 
         //COPIAR CONTENIDO
         result = storage.get("id");
@@ -68,10 +68,10 @@ public class GeneCrawler {
         gene.setId(id);
 
         //GUARDAR XML
-        XmlReader.downloadFile(
-                "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id="+id+"&retmode=xml",
-                "tempFiles\\gene_info\\gene_"+id+".txt"
-        );
+        //XmlReader.downloadFile(
+        //        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id="+id+"&retmode=xml",
+        //        "tempFiles\\gene_info\\gene_"+id+".txt"
+        //);
 
 
         //ALMACENAMIENTO DURANTE LECTURA ASYNC
@@ -99,7 +99,7 @@ public class GeneCrawler {
                 }
             }
         };
-        saxParser.parse("tempFiles\\gene_info\\gene_"+id+".txt",handler);
+        saxParser.parse("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id="+id+"&retmode=xml",handler);
 
         //COPIAR CONTENIDO A OBJETO
         gene.setName(storage.get("Name"));
@@ -119,10 +119,10 @@ public class GeneCrawler {
         Allele allele = new Allele();
 
         //GUARDAR XML
-        XmlReader.downloadFile(
-                "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=gene&id="+id+"&report=sgml&retmode=xml",
-                "tempFiles\\allele\\allele_"+id+".txt"
-        );
+        //XmlReader.downloadFile(
+        //        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=gene&id="+id+"&report=sgml&retmode=xml",
+        //        "tempFiles\\allele\\allele_"+id+".txt"
+        //);
 
         //ALMACENAMIENTO DURANTE LECTURA ASYNC
         HashMap<String,String> storage = AsyncStorage.getInstance().getStorage();
@@ -160,7 +160,7 @@ public class GeneCrawler {
                 }
             }
         };
-        saxParser.parse("tempFiles\\allele\\allele_"+id+".txt",handler);
+        saxParser.parse("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=gene&id="+id+"&report=sgml&retmode=xml",handler);
 
         //COPIAR CONTENIDO A OBJETO
         allele.setGeneAccession(storage.get("Gene-commentary_accession"));
@@ -214,10 +214,10 @@ public class GeneCrawler {
         Reference reference = new Reference();
 
         //GUARDAR XML
-        XmlReader.downloadFile(
-                "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id="+id,
-                "tempFiles\\ref\\ref_"+id+".txt"
-        );
+        //XmlReader.downloadFile(
+        //        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id="+id,
+        //        "tempFiles\\ref\\ref_"+id+".txt"
+        //);
 
         //ALMACENAMIENTO DURANTE LECTURA ASYNC
         HashMap<String,String> storage = AsyncStorage.getInstance().getStorage();
@@ -256,7 +256,7 @@ public class GeneCrawler {
                 }
             }
         };
-        saxParser.parse("tempFiles\\ref\\ref_"+id+".txt",handler);
+        saxParser.parse("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id="+id,handler);
 
         //COPIAR CONTENIDO A OBJETO
         reference.setId(id);
@@ -273,10 +273,10 @@ public class GeneCrawler {
 
     public static void getSequenceData(Allele allele) throws ParserConfigurationException, SAXException, IOException {
         //GUARDAR XML
-        XmlReader.downloadFile(
-                "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="+allele.getGeneAccession()+"&rettype=gb&retmode=xml",
-                "tempFiles\\sequence\\sequence_"+allele.getGeneAccession()+".txt"
-        );
+        //XmlReader.downloadFile(
+        //        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="+allele.getGeneAccession()+"&rettype=gb&retmode=xml",
+        //        "tempFiles\\sequence\\sequence_"+allele.getGeneAccession()+".txt"
+        //);
 
         //ALMACENAMIENTO DURANTE LECTURA ASYNC
         HashMap<String,String> storage = AsyncStorage.getInstance().getStorage();
@@ -301,7 +301,7 @@ public class GeneCrawler {
                 }
             }
         };
-        saxParser.parse("tempFiles\\sequence\\sequence_"+allele.getGeneAccession()+".txt",handler);
+        saxParser.parse("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="+allele.getGeneAccession()+"&rettype=gb&retmode=xml",handler);
 
         //COPIAR DATOS
         allele.setSequence(storage.get("sequence"));

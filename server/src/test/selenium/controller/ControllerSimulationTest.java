@@ -47,9 +47,9 @@ public class ControllerSimulationTest {
 
         //Conseguir referencias
         ReferenceMemory refMemory = ReferenceMemory.getInstance();
-        ArrayList<String> referencesAllele = GeneCrawler.getBibliographyLinks("tempFiles\\allele\\allele_"+id+".txt");
+        ArrayList<String> referencesAllele = GeneCrawler.getBibliographyLinks("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=gene&id="+id+"&report=sgml&retmode=xml");
         for (int i = 0; i< 5; i++) refMemory.queueReference(referencesAllele.get(i));
-        ArrayList<String> referencesSequence = GeneCrawler.getBibliographyLinks("tempFiles\\sequence\\sequence_"+allele.getGeneAccession()+".txt");
+        ArrayList<String> referencesSequence = GeneCrawler.getBibliographyLinks("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="+allele.getGeneAccession()+"&rettype=gb&retmode=xml");
         for (String ref : referencesSequence) refMemory.queueReference(ref);
         refMemory.writeReferences();
 
