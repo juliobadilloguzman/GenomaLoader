@@ -12,6 +12,8 @@ import selenium.util.ReferenceMemory;
 import javax.jws.WebParam;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.lang.annotation.Annotation;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -149,6 +151,18 @@ public class Controller {
     @Produces(MediaType.APPLICATION_JSON)
     public String testCon(@PathParam("id") String geneName) {
         return "HELLO THERE " + geneName.toUpperCase();
+    }
+
+    @GET
+    @Path("/check2/{id}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Response testCon2(@PathParam("id") String geneName) {
+        return Response.ok().entity("HELLO THERE " + geneName.toUpperCase(), new Annotation[0])
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
+
+        //return "HELLO THERE " + geneName.toUpperCase();
     }
 
     @DELETE
