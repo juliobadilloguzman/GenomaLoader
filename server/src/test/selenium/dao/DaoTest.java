@@ -1,5 +1,6 @@
 package selenium.dao;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import selenium.bean.Allele;
 import selenium.bean.Gene;
@@ -35,6 +36,11 @@ public class DaoTest {
         System.out.println(allele.toString());
 
 
+    }
+
+    @Test
+    public void DaoGene_Should_showExisting() throws SQLException {
+        System.out.println(new GeneDao().geneNames());
     }
 
 }

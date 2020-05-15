@@ -4,6 +4,7 @@ import selenium.bean.Gene;
 import selenium.util.MySQLConnection;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class GeneDao implements IGeneDao {
     @Override
@@ -30,5 +31,27 @@ public class GeneDao implements IGeneDao {
             System.out.println(this.getClass().getCanonicalName() + " -> " + ex.getMessage());
         }
         return "Gene storage failed";
+    }
+
+    @Override
+    public ArrayList<String> geneNames() throws SQLException {
+        ArrayList<String> result = new ArrayList<>();
+        Connection connection = MySQLConnection.getConnection();
+        // SELECT DISTINCT name FROM gene;
+        try{
+            String query = "SELECT DISTINCT name FROM gene";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                result.add(rs.getString(1));
+            }
+            rs.close();
+            ps.close();
+            connection.close();
+            return result;
+        } catch(Exception ex) {
+            System.out.println(this.getClass().getCanonicalName() + " -> " + ex.getMessage());
+            return null;
+        }
     }
 }

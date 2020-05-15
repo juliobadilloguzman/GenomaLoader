@@ -19,7 +19,7 @@ import java.sql.SQLException;
 
 public class MySQLConnection {
     public static Connection getConnection(){
-        String cadena = "jdbc:mysql://servidormysqlavanzadas.mysql.database.azure.com:3306/genoma?user=julioadmin@servidormysqlavanzadas&password=PaolaGuzman1996&serverTimezone=UTC&useSSL=true&trustServerCertificate=true";
+        String cadena = "jdbc:mysql://servidormysqlavanzadas.mysql.database.azure.com:3306/genoma?user=julioadmin@servidormysqlavanzadas&password=PaolaGuzman1996&serverTimezone=UTC&trustServerCertificate=true&autoReconnect=true&useSSL=false";
         Connection connection = null;
         try{
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());

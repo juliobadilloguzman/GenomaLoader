@@ -14,6 +14,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Path("/gene")
 public class Controller {
@@ -23,6 +24,9 @@ public class Controller {
     public String addGene(@PathParam("id") String geneName) {
         geneName = geneName.toUpperCase();
         try{
+            ArrayList<String> existingGenes = new GeneDao().geneNames();
+            if (existingGenes.contains(geneName)) return "genAlreadyExists";
+
             //Conseguir info gene
             String id = GeneCrawler.getGeneId(geneName);
             if (id.equals("genDoesntExist")) return id;
@@ -76,6 +80,9 @@ public class Controller {
     public String test(@PathParam("id") String geneName) {
         geneName = geneName.toUpperCase();
         try{
+            ArrayList<String> existingGenes = new GeneDao().geneNames();
+            if (existingGenes.contains(geneName)) return "genAlreadyExists";
+
             //Conseguir info gene
             String id = GeneCrawler.getGeneId(geneName);
             if (id.equals("genDoesntExist")) return id;
@@ -144,4 +151,17 @@ public class Controller {
         return "Failed to connect";
     }
 
+    //new GeneDao().geneNames()
+
+    @GET
+    @Path("/genes")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> getAllNames() {
+        try {
+            return new GeneDao().geneNames();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
