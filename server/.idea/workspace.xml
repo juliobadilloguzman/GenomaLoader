@@ -7,7 +7,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1bf1bc4-ec88-4947-b26b-59a4e34b82c4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/selenium/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/selenium/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/selenium/controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/selenium/controller/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/gen-loader.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/gen-loader.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/gen-loader/WEB-INF/classes/selenium/controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/gen-loader/WEB-INF/classes/selenium/controller/Controller.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,12 +40,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/selenium/controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="162" column="42" lean-forward="true" selection-start-line="162" selection-start-column="42" selection-end-line="162" selection-end-column="42" />
+            <state relative-caret-position="170">
+              <caret line="161" column="69" selection-start-line="161" selection-start-column="69" selection-end-line="161" selection-end-column="69" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#6007#6008#0" expanded="true" />
+                <element signature="e#6042#6043#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="52" column="17" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -109,7 +123,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/selenium/dao/AlleleDao.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
-              <caret line="16" column="39" lean-forward="true" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+              <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -118,7 +132,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/selenium/crawler/GeneCrawler.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1122">
-              <caret line="166" column="70" lean-forward="true" selection-start-line="166" selection-start-column="70" selection-end-line="166" selection-end-column="70" />
+              <caret line="166" column="70" selection-start-line="166" selection-start-column="70" selection-end-line="166" selection-end-column="70" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -172,7 +186,6 @@
         <option value="$PROJECT_DIR$/src/test/selenium/crawler/ReferenceMemoryTest.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/test/selenium/controller/ControllerSimulationTest.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/test/selenium/crawler/GeneCrawlerTestInvalidData.java" />
         <option value="$PROJECT_DIR$/src/main/selenium/dao/IGeneDao.java" />
         <option value="$PROJECT_DIR$/src/main/selenium/crawler/GeneCrawler.java" />
@@ -183,6 +196,7 @@
         <option value="$PROJECT_DIR$/src/main/selenium/util/MySQLConnection.java" />
         <option value="$PROJECT_DIR$/src/test/selenium/dao/DaoTest.java" />
         <option value="$PROJECT_DIR$/src/main/selenium/dao/AlleleDao.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/selenium/controller/Controller.java" />
       </list>
     </option>
@@ -319,7 +333,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1589529971458" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1589531435210" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/seleniumLib/selenium-server-standalone-3.141.0.jar!/" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -532,7 +546,7 @@
       <workItem from="1589480704531" duration="11379000" />
       <workItem from="1589493172556" duration="11287000" />
       <workItem from="1589508132104" duration="3523000" />
-      <workItem from="1589515885498" duration="13343000" />
+      <workItem from="1589515885498" duration="14747000" />
     </task>
     <servers />
   </component>
@@ -569,7 +583,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111442000" />
+    <option name="totallyTimeSpent" value="112846000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -590,7 +604,7 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Web" order="4" side_tool="true" />
       <window_info id="Designer" order="5" />
-      <window_info content_ui="combo" id="Project" order="6" visible="true" weight="0.28895614" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.28895614" />
       <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.3289689" />
       <window_info anchor="bottom" id="Docker" order="1" show_stripe_button="false" />
@@ -602,7 +616,7 @@
       <window_info anchor="bottom" id="Application Servers" order="7" weight="0.3289689" />
       <window_info anchor="bottom" id="Message" order="8" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Run" order="10" visible="true" weight="0.3764321" />
+      <window_info anchor="bottom" id="Run" order="10" visible="true" weight="0.3764321" />
       <window_info anchor="bottom" id="Debug" order="11" weight="0.39934534" />
       <window_info anchor="bottom" id="Cvs" order="12" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="13" weight="0.4" />
@@ -765,13 +779,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="45" column="15" selection-start-line="45" selection-start-column="15" selection-end-line="45" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/selenium/util/ReferenceMemory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -866,7 +873,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/selenium/dao/AlleleDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
-          <caret line="16" column="39" lean-forward="true" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+          <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -883,7 +890,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/selenium/crawler/GeneCrawler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1122">
-          <caret line="166" column="70" lean-forward="true" selection-start-line="166" selection-start-column="70" selection-end-line="166" selection-end-column="70" />
+          <caret line="166" column="70" selection-start-line="166" selection-start-column="70" selection-end-line="166" selection-end-column="70" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -897,13 +904,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="52" column="17" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/selenium/controller/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="162" column="42" lean-forward="true" selection-start-line="162" selection-start-column="42" selection-end-line="162" selection-end-column="42" />
+        <state relative-caret-position="170">
+          <caret line="161" column="69" selection-start-line="161" selection-start-column="69" selection-end-line="161" selection-end-column="69" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#6007#6008#0" expanded="true" />
+            <element signature="e#6042#6043#0" expanded="true" />
           </folding>
         </state>
       </provider>

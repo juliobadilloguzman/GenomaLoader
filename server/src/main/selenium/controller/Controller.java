@@ -1,5 +1,6 @@
 package selenium.controller;
 
+import org.json.simple.JSONObject;
 import selenium.bean.Allele;
 import selenium.bean.Gene;
 import selenium.crawler.GeneCrawler;
@@ -157,7 +158,9 @@ public class Controller {
     @Path("/check2/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response testCon2(@PathParam("id") String geneName) {
-        return Response.ok().entity("HELLO THERE " + geneName.toUpperCase(), new Annotation[0])
+        JSONObject json = new JSONObject();
+        json.put("message", "HELLO THERE " + geneName.toUpperCase());
+        return Response.ok().entity(json, new Annotation[0])
                 .header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
                 .allow("OPTIONS").build();
