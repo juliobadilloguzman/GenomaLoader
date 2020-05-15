@@ -23,16 +23,30 @@ import java.util.List;
 public class Controller {
     @POST
     @Path("/load/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String addGene(@PathParam("id") String geneName) {
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Response addGene(@PathParam("id") String geneName) {
         geneName = geneName.toUpperCase();
         try{
             ArrayList<String> existingGenes = new GeneDao().geneNames();
-            if (existingGenes.contains(geneName)) return "genAlreadyExists";
+            if (existingGenes.contains(geneName)) {
+                JSONObject json = new JSONObject();
+                json.put("message","genAlreadyExists");
+                return Response.ok().entity(json, new Annotation[0])
+                        .header("Access-Control-Allow-Origin", "*")
+                        .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                        .allow("OPTIONS").build();
+            }
 
             //Conseguir info gene
             String id = GeneCrawler.getGeneId(geneName);
-            if (id.equals("genDoesntExist")) return id;
+            if (id.equals("genDoesntExist")) {
+                JSONObject json = new JSONObject();
+                json.put("message",id);
+                return Response.ok().entity(json, new Annotation[0])
+                        .header("Access-Control-Allow-Origin", "*")
+                        .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                        .allow("OPTIONS").build();
+            }
             Gene gene = GeneCrawler.getGeneInfo(id);
             GeneDao ed = new GeneDao();
             ed.storeGene(gene);
@@ -76,25 +90,51 @@ public class Controller {
                 linkReferenceDao.linkReference(refMemory.getReference(ref), allele);
             }
 
-            return "Success";
+            JSONObject json = new JSONObject();
+            json.put("message","Success");
+            return Response.ok().entity(json, new Annotation[0])
+                    .header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                    .allow("OPTIONS").build();
+
+
 
         }catch (Exception ex){
-            return ex.getMessage();
+            JSONObject json = new JSONObject();
+            json.put("message",ex.getMessage());
+            return Response.ok().entity(json, new Annotation[0])
+                    .header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                    .allow("OPTIONS").build();
         }
     }
 
     @POST
     @Path("/test/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String test(@PathParam("id") String geneName) {
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Response test(@PathParam("id") String geneName) {
         geneName = geneName.toUpperCase();
         try{
             ArrayList<String> existingGenes = new GeneDao().geneNames();
-            if (existingGenes.contains(geneName)) return "genAlreadyExists";
+            if (existingGenes.contains(geneName)){
+                JSONObject json = new JSONObject();
+                json.put("message","genAlreadyExists");
+                return Response.ok().entity(json, new Annotation[0])
+                        .header("Access-Control-Allow-Origin", "*")
+                        .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                        .allow("OPTIONS").build();
+            }
 
             //Conseguir info gene
             String id = GeneCrawler.getGeneId(geneName);
-            if (id.equals("genDoesntExist")) return id;
+            if (id.equals("genDoesntExist")){
+                JSONObject json = new JSONObject();
+                json.put("message",id);
+                return Response.ok().entity(json, new Annotation[0])
+                        .header("Access-Control-Allow-Origin", "*")
+                        .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                        .allow("OPTIONS").build();
+            }
             Gene gene = GeneCrawler.getGeneInfo(id);
             GeneDao ed = new GeneDao();
             ed.storeGene(gene);
@@ -140,10 +180,22 @@ public class Controller {
                 linkReferenceDao.linkReference(refMemory.getReference(ref), allele);
             }
 
-            return "Success";
+            JSONObject json = new JSONObject();
+            json.put("message","Success");
+            return Response.ok().entity(json, new Annotation[0])
+                    .header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                    .allow("OPTIONS").build();
+
+
 
         }catch (Exception ex){
-            return ex.getMessage();
+            JSONObject json = new JSONObject();
+            json.put("message",ex.getMessage());
+            return Response.ok().entity(json, new Annotation[0])
+                    .header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                    .allow("OPTIONS").build();
         }
     }
 
@@ -170,27 +222,43 @@ public class Controller {
 
     @DELETE
     @Path("/truncate")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String truncate() {
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Response truncate() {
+        String res;
         try {
-            return new Truncate().trunc();
+            res = new Truncate().trunc();
         } catch (SQLException e) {
             e.printStackTrace();
+            res = "Failed to connect";
         }
-        return "Failed to connect";
+        JSONObject json = new JSONObject();
+        json.put("message",res);
+        return Response.ok().entity(json, new Annotation[0])
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
+
     }
 
     //new GeneDao().geneNames()
 
     @GET
     @Path("/genes")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<String> getAllNames() {
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Response getAllNames() {
+        List<String> res = new ArrayList<>();
+
         try {
-            return new GeneDao().geneNames();
+            res =  new GeneDao().geneNames();
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
+
+        JSONObject json = new JSONObject();
+        json.put("genes",res);
+        return Response.ok().entity(json, new Annotation[0])
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
     }
 }
