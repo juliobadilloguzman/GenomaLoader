@@ -1,5 +1,6 @@
 package selenium.controller;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import selenium.bean.Allele;
 import selenium.bean.Gene;
@@ -220,7 +221,7 @@ public class Controller {
         //return "HELLO THERE " + geneName.toUpperCase();
     }
 
-    @DELETE
+    @POST
     @Path("/truncate")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response truncate() {
@@ -254,9 +255,13 @@ public class Controller {
             e.printStackTrace();
         }
 
-        JSONObject json = new JSONObject();
-        json.put("genes",res);
-        return Response.ok().entity(json, new Annotation[0])
+        JSONArray jArray = new JSONArray();
+        for (String temp : res){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("gen", temp);
+            jArray.add(jsonObject);
+        }
+        return Response.ok().entity(jArray, new Annotation[0])
                 .header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
                 .allow("OPTIONS").build();
