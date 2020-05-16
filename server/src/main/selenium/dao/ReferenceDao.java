@@ -27,7 +27,7 @@ public class ReferenceDao implements IReferenceDao {
                 return "Reference stored successfully";
             }
         } catch(Exception ex) {
-            System.out.println(this.getClass().getCanonicalName() + " -> " + ex.getMessage());
+            //System.out.println(this.getClass().getCanonicalName() + " -> " + ex.getMessage());
         }
         return "Reference storage failed";
     }

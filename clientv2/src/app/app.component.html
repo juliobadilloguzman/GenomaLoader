@@ -1,0 +1,48 @@
+<div class="content" role="main" id="particle-js">
+
+    <particles [params]="myParams" [style]="myStyle" [width]="width" [height]="height"> </particles>
+
+    <input type="hidden" #selection>
+
+    <h4 class="title">Genomic <span>Data</span> Loader</h4>
+
+    <div class="container">
+        <form [formGroup]="insertForm" (ngSubmit)="insertGen()">
+            <input type="text" required formControlName="gen" class="full-width" placeholder="Introduce el nombre del gen">
+            <button>Cargar gen</button>
+            <div class="insertandoGen" *ngIf="inserted">
+                <span>Insertando gen...</span>
+            </div>
+
+            <div class="errorFormat" *ngIf="!formatCorrect">
+                <span>Formato del gen inválido</span>
+            </div>
+        </form>
+    </div>
+
+    <div class="list-container">
+        <h4 class="text-white">Genes cargados</h4>
+
+        <div *ngIf="!hayGenes; else noHayGenes">
+            <span class="gen" *ngFor="let item of genes">{{item.gen}}</span>
+        </div>
+
+
+
+        <!-- <span class="gen">B729</span>
+        <span class="gen">CS79</span>
+        <span class="gen">ABB78</span>
+        <span class="gen">ABB78</span>
+        <span class="gen">ABB78</span>
+        <span class="gen">BHS77</span> -->
+    </div>
+
+    <div class="delete-container">
+        <button (click)="truncate()">Limpiar todo</button>
+    </div>
+
+    <ng-template #noHayGenes>
+        <span class="text-white" style="text-align: center;">Aun no hay genes en la base de datos</span>
+    </ng-template>
+
+</div>

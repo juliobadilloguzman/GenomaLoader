@@ -41,7 +41,7 @@ public class ReferenceMemory {
             ReferenceDao refDao = new ReferenceDao();
             refDao.storeReference(reference);
 
-            System.out.println(reference);
+            //System.out.println(reference);
             knownReferences.put(link,reference);
         }
         newReferences.clear();
